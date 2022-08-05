@@ -12,39 +12,35 @@ import UiInfoFilm from '../../component/Ui/UiInfoFilm';
 import {APIGetIntro,APIGetIntroLink} from "../../component/Func/APIGet"
 
 export interface InfoIDPostProps {
+  data:any
 }
 
-interface IntroLinkProp
+export interface IntroLinkProp
 {
-    link:string;
+    link:any;
 }
-interface DataLinkProp {
-  director:string;
-  cast: string;
-  content: string;
-  id: number;
-  id_quocgia: number;
-  id_theloai: number;
-  id_typephim: number;
-  link: string;
-  link_background: string;
-  name: string;
-  time: string;
-  year: number;
+export interface DataLinkProp {
+year:number;
+director:string;
+cast:string;
+content:string;
+link:string;
+link_background:string;
+name:string;
+time:string;
+country:string;
+theloai:string;
 }
 export default function InfoIDPost(props: InfoIDPostProps) {
   const [data,setData] = React.useState([])
-  const [datalink,setDataLink] = React.useState<DataLinkProp>()
+  const [datalink,setDataLink] = React.useState<DataLinkProp| any>();
   const [check,setCheck] = React.useState(false)
   const router = useRouter()  
 
   const GetIntro=async()=>{
     await setCheck(false)
-    let param:IntroLinkProp={link:router.query.InfoID}
-    let ret_link = await APIGetIntroLink(param)
-    await setDataLink(ret_link.data)
+    await setDataLink(props.data)
     let ret = await APIGetIntro()
-    console.log(ret.data)
     await setData(ret.data)
     await setCheck(true)
 
@@ -65,7 +61,7 @@ export default function InfoIDPost(props: InfoIDPostProps) {
         <div className='container'>
           <div className='row'>
             <div className='col-xl-9'>
-              {check && <UiInfoFilm title={"Hoán Hồn"} url="phim-thinh-hanh" ret_link={datalink}/>}
+              <UiInfoFilm ret_link={props.data}/>
               <UiHomeFilm title={"PHIM THỊNH HÀNH"} url="phim-thinh-hanh" data={data}/>
             </div>
             <div className='col-lg row'>
@@ -82,4 +78,10 @@ export default function InfoIDPost(props: InfoIDPostProps) {
       </main>
     </div>
   );
+}
+export const getServerSideProps= async (context:any)=> { 
+  let param_ep:IntroLinkProp={link: context.params.InfoID }
+  let res = await APIGetIntroLink(param_ep)
+  const data = await res.data
+  return { props: { data } }
 }

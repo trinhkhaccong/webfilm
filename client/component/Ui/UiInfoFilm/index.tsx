@@ -27,23 +27,20 @@ const gridStyle3: React.CSSProperties = {
     backgroundColor:"#1a1a1a"
 
 };
-interface DataLinkProp {
+export interface DataLinkProp {
+    year:number;
     director:string;
-    cast: string;
-    content: string;
-    id: number;
-    id_quocgia: number;
-    id_theloai: number;
-    id_typephim: number;
-    link: string;
-    link_background: string;
-    name: string;
-    time: string;
-    year: number;
-}
+    cast:string;
+    content:string;
+    link:string;
+    link_background:string;
+    name:string;
+    time:string;
+    country:string;
+    theloai:string;
+    }
+    
 export interface UiInfoFilmProps {
-    title: String;
-    url:String;
     ret_link:DataLinkProp;
 }
 
@@ -54,10 +51,8 @@ const UiInfoFilm = (props: UiInfoFilmProps) => {
         director,
         cast,
         content,
-        id,
-        id_quocgia,
-        id_theloai,
-        id_typephim,
+        country,
+        theloai,
         link,
         link_background,
         name,
@@ -102,11 +97,11 @@ const UiInfoFilm = (props: UiInfoFilmProps) => {
                             </div>
                             <div className='d-flex'>
                                 <h6 style={{color:"#ff8a00"}} className='col-md-3'>Thể Loại:</h6>
-                                <p style={{color:"#FFFFFF"}}>{id_theloai}</p>
+                                <p style={{color:"#FFFFFF"}}>{theloai}</p>
                             </div>
                             <div className='d-flex'>
                                 <h6 style={{color:"#ff8a00"}} className='col-md-3'>Quốc Gia:</h6>
-                                <p style={{color:"#FFFFFF"}}>{id_quocgia}</p>
+                                <p style={{color:"#FFFFFF"}}>{country}</p>
                             </div>
                             <div>
                                 <h6 style={{color:"#ff8a00"}}>Nội dung phim {name}</h6>

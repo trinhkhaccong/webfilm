@@ -16,6 +16,7 @@
     "bootstrap": "^5.2.0",
     "jol-player": "^3.2.0",
     "next": "12.2.3",
+    "prettier": "^2.7.1",
     "react": "18.2.0",
     "react-device-detect": "^2.2.2",
     "react-dom": "18.2.0",
@@ -23,6 +24,8 @@
     "react-player": "^2.10.1",
     "react-slick": "^0.29.0",
     "sass": "^1.54.0",
+    "serverless-mysql": "^1.5.4",
+    "sitemap": "^7.1.1",
     "video-react": "^0.15.0"
   },
   "devDependencies": {

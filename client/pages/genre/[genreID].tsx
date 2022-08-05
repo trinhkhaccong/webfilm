@@ -28,8 +28,8 @@ export default function GenreIDPost(props: GenreIDPostProps) {
         <div className='container'>
           <div className='row'>
             <div className='col-xl-9'>
-              <UiInfoFilm title={"Hoán Hồn"} url="phim-thinh-hanh" />
-              <UiHomeFilm title={"PHIM THỊNH HÀNH"} url="phim-thinh-hanh" />
+              {/* <UiInfoFilm title={"Hoán Hồn"} url="phim-thinh-hanh" />
+              <UiHomeFilm title={"PHIM THỊNH HÀNH"} url="phim-thinh-hanh" /> */}
             </div>
             <div className='col-lg row'>
               <div className='col-md'>
