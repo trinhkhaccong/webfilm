@@ -70,7 +70,7 @@ const UiWatch = (props: UiWatchProps) => {
                 <div>
                     <div className='title-film' >Phim {props.datalink?.name_vn} - tập {props.datalink?.episode}</div>
                     <Player playsInline poster={props.datalink?.link_background}
-                    src={props.datalink?.link_video_tm}/>
+                    src={props.datalink?.link_video_sub}/>
                     <div className='d-flex flex-wrap'>
                         <div  className='title-film'>Danh sách tập :</div>
                         {props.episode?.map(value=>(

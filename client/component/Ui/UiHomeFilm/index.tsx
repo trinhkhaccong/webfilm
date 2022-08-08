@@ -34,8 +34,8 @@ interface ObjectFilm
     name: string
 }
 export interface UiHomeFilmProps {
-    title: String;
-    url:String;
+    title: any;
+    url:any;
     data:ObjectFilm[]
 }
 
@@ -43,21 +43,15 @@ const UiHomeFilm = (props: UiHomeFilmProps) => {
     const [position, setPosition] = useState(0);
     const router = useRouter()
 
-    useEffect(() => {
-        console.log("props.data",props.data);
-        
+    useEffect(() => {        
         setPosition(window.innerWidth)
     }, [position]);
 
     const onClick = () => {
-        router.push({
-          pathname: "list/"+props.url
-        })
+        window.open(props.url,"_parent")
       }
     const onClickInfo = (value:string) => {
-        router.push({
-          pathname: "info/"+value
-        })
+        window.open("/info/"+value,"_parent")
       }
     return (
         <div >
@@ -70,7 +64,7 @@ const UiHomeFilm = (props: UiHomeFilmProps) => {
                     props.data?.map(value => (
                         <Card.Grid style={position > 1100 ? gridStyle1 : (position > 765 ? gridStyle2 : gridStyle3)} onClick={()=>onClickInfo(value.link)}>
                             <div className={styles.home}>
-                                <img alt="Tinh Hà Xán Lạn" className={styles.imageHome} width='100%' src={value.link_background}/>
+                                <img alt={value.link +" - "+value.name} className={styles.imageHome} src={value.link_background}/>
                                 <div className={styles.bottomHome}>{value.name}</div>
                                 <div className={styles.topLeftHome}>Full HD</div>
                                 <div className={styles.play}></div>

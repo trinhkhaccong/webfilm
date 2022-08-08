@@ -58,8 +58,8 @@ const UiMenuMobile = (props: UiMenuMobileProps) => {
         getItem(<Link href="/list/phim-bo">Phim Bộ</Link>, 'phim-bo'),
         getItem('Thể Loại', 'the-loai', theloai),
         getItem('Quốc gia', 'country', contry),
-        getItem(<Link href="/list/phim-hoat-hinh">Phim Hoạt Hình</Link>,'phim-hoat-hinh'),
-        getItem(<Link href="/list/phim-chieu-rap">Phim Chiếu Rạp</Link>, 'phim-chieu-rap'),
+        getItem(<Link href="/genre/phim-hoat-hinh">Phim Hoạt Hình</Link>,'phim-hoat-hinh'),
+        getItem(<Link href="/genre/phim-chieu-rap">Phim Chiếu Rạp</Link>, 'phim-chieu-rap'),
       ];
       await setItem(items)
     }

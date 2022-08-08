@@ -9,27 +9,37 @@ const gridStyle: React.CSSProperties = {
     backgroundColor: "#1a1a1a",
     cursor: "pointer"
 };
-
+interface ObjectFilm
+{
+    link: string;
+    link_background: string;
+    name: string;
+    year:any;
+}
 export interface UiComeProps {
     title: String;
+    data:ObjectFilm[];
 }
 
 const UiCome = (props: UiComeProps) => {
+    const {data,title} = props
+    const onClickInfo = (value:string) => {
+        window.open("/info/"+value,"_parent")
+      }
     return (
         <div >
-            <div className='title-film' > {props.title}</div>
+            <div className='title-film' > {title}</div>
             <Card>
                 {
-                    [1, 2, 3, 4, 5].map(value => (
-                        <Card.Grid style={gridStyle}>
+                    data.map(value => (
+                        <Card.Grid style={gridStyle} onClick={()=>onClickInfo(value.link)}>
                             <div className='d-flex'>
                                 <div >
-                                    <img className='image-home' alt="Tinh Hà Xán Lạn" width="100%" src="https://cdn1.kenhvn2.com/temp/thumb/360_480_913137_dau-la-dai-luc.jpg" />
-
+                                    <img className='image-home' alt={value.name+" - "+ value.link} width="100%" src={value.link_background} />
                                 </div>
                                 <div className='col-8 div-come' style={{ paddingLeft: 5 }}>
-                                    <div >Anh hùng tia chớp phần 8</div>
-                                    <div >2019</div>
+                                    <div >{value.name}</div>
+                                    <div >{value.year}</div>
                                     <Rate allowHalf defaultValue={5} />
                                 </div>
                             </div>

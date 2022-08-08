@@ -78,6 +78,9 @@ $color-primary: black;
 }
 .image
 {
+  max-height:300px;
+  width: 100%;
+  object-fit: cover;
   cursor: pointer;
   transition: all .3s ease-in-out;
 }
@@ -178,6 +181,10 @@ $color-primary: black;
 }
 .imageHome
 {
+  max-height:300px;
+  width: 100%;
+  object-fit: cover;
+
   cursor: pointer;
   transition: all .3s ease-in-out;
 }

@@ -1,10 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { Player } from 'video-react';
 import UiHead from '../component/Ui/UiHead'
 import styles from '../styles/Home.module.scss'
 import UiCarousel from '../component/Ui/UiCarousel'
@@ -12,24 +9,27 @@ import UiHomeFilm from '../component/Ui/UiHomeFilm'
 import UiFooter from '../component/Ui/UiFooter'
 import UiCome from '../component/Ui/UiCome'
 import UiTrending from '../component/Ui/UiTrending'
-import {APIGetIntro} from "../component/Func/APIGet"
-const Home: NextPage = () => {
+import UiReload from '../component/Ui/UiReload'
+import {APIGetIntro,APIGetCarousel,APIGetIntroTheLoai,GetIntroProp,GetIntroTheLoaiProp} from "../component/Func/APIGet"
+interface HomeProp
+{
+  data_phimle:any;
+  data_phimbo:any;
+  cinema:any;
+  anime:any;
+  data_carousel:any;
+  data_wait:any;
+}
+const Home = (props:HomeProp) => {
+  const {data_phimle,data_phimbo,cinema,anime,data_carousel,data_wait }=props
   const router = useRouter()
   const [playTime, setPlayTime] = useState(0);
-  const [data,setData] = useState([])
-  const onClick = () => {
-    router.push({
-      pathname: "posts/[postID]",
-      query: {
-        postID: 123,
-        ref: "soicical"
-      }
-    })
-  }
+  const [check,setCheck] = useState(false)
   const GetIntro=async()=>{
-    let ret = await APIGetIntro()
-    console.log(ret.data)
-    await setData(ret.data)
+    await setCheck(false)
+    
+    await setCheck(true)
+    
   }
   useEffect(()=>{
     GetIntro()
@@ -55,33 +55,58 @@ const Home: NextPage = () => {
           href="https://video-react.github.io/assets/video-react.css"
         />
       </Head>
-
-      <main >
-        <UiHead />
-        <div className='container'>
-          <UiCarousel  data={data}/>
-          <div className='row'>
-            <div className='col-xl-9'>
-              <UiHomeFilm title={"PHIM LẺ MỚI CẬP NHẬT"} url="phim-le" data={data}/>
-              <UiHomeFilm title={"PHIM BỘ MỚI CẬP NHẬT"} url="phim-bo" data={data}/>
-              <UiHomeFilm title={"PHIM CHIẾU RẠP"} url="phim-chieu-rap" data={data}/>
-              <UiHomeFilm title={"PHIM THỊNH HÀNH"} url="phim-thinh-hanh" data={data}/>
-            </div>
-            <div className='col-lg row'>
-              <div className='col-md'>
-                <UiCome title={"PHIM SẮP CHIẾU"} />
+        {
+          check && <main >
+          <UiHead />
+          <div className='container'>
+            <UiCarousel  data={data_carousel}/>
+            <div className='row'>
+              <div className='col-xl-9'>
+                <UiHomeFilm title={"PHIM LẺ MỚI CẬP NHẬT"} url="/list/phim-le" data={data_phimle}/>
+                <UiHomeFilm title={"PHIM BỘ MỚI CẬP NHẬT"} url="/list/phim-bo" data={data_phimbo}/>
+                <UiHomeFilm title={"PHIM ANIME - HOẠT HÌNH"} url="/genre/phim-anime" data={anime}/>
+                <UiHomeFilm title={"PHIM CHIẾU RẠP"} url="/genre/phim-chieu-rap" data={cinema}/>
               </div>
-              <div className='col-md'>
-                <UiTrending title={"TRENDING"} />
+              <div className='col-lg row'>
+                <div className='col-md'>
+                  <UiCome title={"PHIM SẮP CHIẾU"} data={data_wait}/>
+                </div>
+                <div className='col-md'>
+                  <UiTrending title={"TRENDING"} />
+                </div>
               </div>
             </div>
+            <UiFooter/>
           </div>
-          <UiFooter/>
-        </div>
-      </main>
-
+        </main>
+        }
+        {
+          !check && <div><UiReload/></div>
+        }
     </div>
   )
+}
+
+export const getServerSideProps= async (context:any)=> { 
+    let ret_carousel = await APIGetCarousel()
+    let param_phimle:GetIntroProp={id_typephim:1,limit:8,offset:0}
+    let param_phimbo:GetIntroProp={id_typephim:2,limit:8,offset:0}
+    let param_cinema:GetIntroTheLoaiProp={id_theloai:9,limit:8,offset:0}
+    let param_anime:GetIntroTheLoaiProp={id_theloai:20,limit:8,offset:0}
+    let param_wait:GetIntroTheLoaiProp={id_theloai:21,limit:8,offset:0}
+
+    let ret_phimle = await APIGetIntro(param_phimle)
+    let ret_phimbo = await APIGetIntro(param_phimbo)
+    let ret_cinema = await APIGetIntroTheLoai(param_cinema)
+    let ret_anime = await APIGetIntroTheLoai(param_anime)
+    let ret_wait = await APIGetIntroTheLoai(param_wait)
+    const data_phimle = await ret_phimle.data
+    const data_phimbo = await ret_phimbo.data
+    const cinema = await ret_cinema.data
+    const anime = await ret_anime.data
+    const data_carousel= await ret_carousel.data
+    const data_wait= await ret_wait.data
+  return { props: { data_phimle,data_phimbo,cinema,anime,data_carousel,data_wait } }
 }
 
 export default Home

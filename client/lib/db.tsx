@@ -28,8 +28,9 @@ export async function excuteQuery(props:excuteQueryProps) {
 
 export async function excuteQueryOb(props:excuteQueryProps) {
   try {
+    let results:any=[]
     const {query,values} = props
-    const results = await db.query(query, values);
+    results = await db.query(query, values);
     await db.end();
     return results[0];
   } catch (error) {

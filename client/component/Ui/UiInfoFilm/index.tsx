@@ -77,15 +77,15 @@ const UiInfoFilm = (props: UiInfoFilmProps) => {
             <div className='d-flex justify-content-between mt-3'>
             </div>
             <div className='row'>
-                <div className='col-md-6'>
+                <div className='col-md-6 col-xl-4 col-lg-4'>
                         <div className={styles.home}>
-                                <img alt="Tinh Hà Xán Lạn" className={styles.imageHome} width='100%' src={link_background}/>
+                                <img alt={link + " - " +name} className={styles.imageHome} width='100%' src={link_background}/>
                                 <div className={styles.bottomHome} onClick={()=>onClick(link)}>Xem phim</div>
                                 <div className={styles.topLeftHome}>Full HD</div>
                                 <div className={styles.play} onClick={()=>onClick(link)}></div>
                         </div>
                     </div>
-                        <div className='col-md-6' style={{overflow:'auto',textAlign:"left"}}>
+                        <div className='col-md-6 col-xl-8 col-lg-8' style={{overflow:'auto',textAlign:"left"}}>
                             <div className='title-info-film' > {name}</div>
                             <div className='d-flex'>
                                 <h6 style={{color:"#ff8a00"}}  className='col-md-3'>Đạo diễn:</h6>
@@ -102,6 +102,10 @@ const UiInfoFilm = (props: UiInfoFilmProps) => {
                             <div className='d-flex'>
                                 <h6 style={{color:"#ff8a00"}} className='col-md-3'>Quốc Gia:</h6>
                                 <p style={{color:"#FFFFFF"}}>{country}</p>
+                            </div>
+                            <div className='d-flex'>
+                                <h6 style={{color:"#ff8a00"}} className='col-md-3'>Năm sản xuất:</h6>
+                                <p style={{color:"#FFFFFF"}}>{year}</p>
                             </div>
                             <div>
                                 <h6 style={{color:"#ff8a00"}}>Nội dung phim {name}</h6>

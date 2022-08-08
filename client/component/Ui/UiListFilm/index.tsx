@@ -4,7 +4,6 @@ import Slider from "react-slick";
 import { Card } from 'antd';
 import { useRouter } from 'next/router';
 import styles from "../../../styles/Home.module.scss"
-import { Pagination } from 'antd';
 
 const gridStyle1: React.CSSProperties = {
     width: "25%",
@@ -28,9 +27,15 @@ const gridStyle3: React.CSSProperties = {
     backgroundColor:"#1a1a1a"
 
 };
+interface ObjectFilm
+{
+    link: string;
+    link_background: string;
+    name: string
+}
 export interface UiListFilmProps {
     title: string;
-    url:string;
+    data:ObjectFilm[]
 }
 
 const UiListFilm = (props: UiListFilmProps) => {
@@ -42,9 +47,7 @@ const UiListFilm = (props: UiListFilmProps) => {
     }, [position]);
 
     const onClickInfo = (value:string) => {
-        router.push({
-          pathname: "info/"+value
-        })
+        window.open("/info/"+value,"_parent")
       }
     return (
         <div >
@@ -52,22 +55,19 @@ const UiListFilm = (props: UiListFilmProps) => {
             <div className='title-film' > {props.title}</div>
             </div>
             <Card>
-                {
-                    ["1", "2", "3", "4", "5", "6", "7", "8","1", "2", "3", "4", "5", "6", "7", "8","4", "5", "6", "7","4", "5", "6", "7"].map(value => (
-                        <Card.Grid style={position > 1100 ? gridStyle1 : (position > 765 ? gridStyle2 : gridStyle3)} onClick={()=>onClickInfo(value)}>
+            {
+                    props.data?.map(value => (
+                        <Card.Grid style={position > 1100 ? gridStyle1 : (position > 765 ? gridStyle2 : gridStyle3)} onClick={()=>onClickInfo(value.link)}>
                             <div className={styles.home}>
-                                <img alt="Tinh Hà Xán Lạn" className={styles.imageHome} width='100%' src="https://cdn1.kenhvn2.com/temp/thumb/360_480_858565_poster-tram-vun-huong-phai.jpeg"/>
-                                <div className={styles.bottomHome}>Anh hùng tia chớp phần 8</div>
-                                <div className={styles.topLeftHome}>Tập {value} - HD</div>
+                                <img alt={value.link+ " - " + value.name} className={styles.imageHome} src={value.link_background}/>
+                                <div className={styles.bottomHome}>{value.name}</div>
+                                <div className={styles.topLeftHome}>Full HD</div>
                                 <div className={styles.play}></div>
                             </div>
                         </Card.Grid>
                     ))
                 }
             </Card>
-            <div style={{padding:10}}>
-            <Pagination  defaultCurrent={1} total={200} pageSize={24}/>
-            </div>
         </div>
     );
 }
